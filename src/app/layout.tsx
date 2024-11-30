@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
+import { QueryProvider } from "@/components/query-provider";
 
 import "./globals.css";
-import { QueryProvider } from "@/components/query-provider";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Apkfunny - Best and Free Android APK Download Service",
@@ -21,8 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+      <body className={cn("antialiased", roboto.className)}>
+        <QueryProvider>
+          <NuqsAdapter>{children}</NuqsAdapter>
+        </QueryProvider>
       </body>
     </html>
   );

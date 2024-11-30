@@ -1,5 +1,7 @@
+import { AddApkFormCard } from "@/features/dashboard/admin/apk-add-card";
+
 const AdminPage = () => {
-  return <div>Adding Apks Form Making</div>;
+  return <AddApkFormCard />;
 };
 
 export default AdminPage;
