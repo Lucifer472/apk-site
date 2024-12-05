@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -43,6 +44,8 @@ export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <Suspense>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </Suspense>
   );
 };

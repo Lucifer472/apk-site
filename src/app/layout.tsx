@@ -4,8 +4,9 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { QueryProvider } from "@/components/query-provider";
 
-import "./globals.css";
 import { cn } from "@/lib/utils";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Apkfunny - Best and Free Android APK Download Service",

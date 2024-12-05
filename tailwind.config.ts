@@ -15,6 +15,7 @@ export default {
         foreground: "hsl(var(--foreground))",
         main: "var(--main-green)",
         "main-light": "var(--light-green)",
+        "main-hover": "var(--light-hover)",
         "main-dark": "var(--dark-green)",
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -62,5 +63,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

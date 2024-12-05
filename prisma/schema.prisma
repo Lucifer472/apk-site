@@ -19,3 +19,27 @@ model User {
   updatedAt DateTime @updatedAt
 }
  
+ model Application {
+  id    String  @id
+
+  name String
+  icon String  @db.LongText
+  category String
+  rating String
+  age String
+  download String
+  link String
+  developer  String
+  version String
+  features  String  @db.LongText
+
+  images Images[]
+ }
+
+ model Images {
+  id    Int   @id   @default(autoincrement())
+  url  String
+  
+  applicationId   String
+  Application   Application @relation(fields: [applicationId], references: [id])
+ }

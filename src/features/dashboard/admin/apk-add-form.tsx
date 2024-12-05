@@ -1,12 +1,14 @@
 "use client";
 
 import { z } from "zod";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ImageIcon } from "lucide-react";
+
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { toast } from "sonner";
 
 import {
   Form,
@@ -26,14 +28,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { ImageUpload } from "./image-upload";
 
 import { addApkFormSchema } from "./schema";
+import { useCreateApplication } from "./api/use-create-application";
+
 import { ageGroup, allCategory, appRatings } from "@/constant";
 
 const Editor = dynamic(() => import("./editor"), { ssr: false });
 
 export const AddApkForm = () => {
   const [content, setContent] = useState<EditorJS.OutputData | null>(null);
+
+  const { mutate, isPending } = useCreateApplication();
 
   const form = useForm<z.infer<typeof addApkFormSchema>>({
     resolver: zodResolver(addApkFormSchema),
@@ -45,11 +52,11 @@ export const AddApkForm = () => {
       category: "battle-royal",
       developer: "",
       download: "",
-      features: "",
       icon: "",
       images: [""],
       link: "",
       ratings: "1",
+      features: "",
     },
   });
 
@@ -89,14 +96,35 @@ export const AddApkForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (content) {
+      const data = JSON.stringify(content);
+
+      form.setValue("features", data);
+    }
+  }, [content, form]);
+
   const handleApkAction = (values: z.infer<typeof addApkFormSchema>) => {
-    console.log(values);
-    console.log(content);
+    mutate(
+      { json: values },
+      {
+        onError: () => {
+          toast.error("Unable to add application");
+        },
+        onSuccess: () => {
+          toast.success("Application Add Successfully");
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        },
+      }
+    );
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleApkAction)}>
+      <form onSubmit={form.handleSubmit(handleApkAction)} className="space-y-6">
         <div className="space-y-4">
           <FormField
             control={form.control}
@@ -324,8 +352,31 @@ export const AddApkForm = () => {
               </div>
             )}
           />
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Upload Images</FormLabel>
+                <div className="flex items-center justify-start w-full flex-wrap gap-4">
+                  {field.value.map((_v, index) => (
+                    <ImageUpload
+                      value={field.value}
+                      onChange={field.onChange}
+                      index={index}
+                      key={index}
+                    />
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Editor setData={setContent} />
         </div>
+        <Button disabled={isPending} type="submit" size={"lg"}>
+          Add Application
+        </Button>
       </form>
     </Form>
   );

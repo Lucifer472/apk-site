@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Toaster } from "sonner";
 
 import { auth } from "@/auth";
 import { GlobalLayoutType } from "@/types";
@@ -15,6 +16,7 @@ const DashboardLayout = async ({ children }: GlobalLayoutType) => {
 
   return (
     <main className="min-h-screen">
+      <Toaster />
       <div className="flex w-full h-full">
         <div className="fixed left-0 top-0 hidden lg:block lg:w-[256px] h-full overflow-scroll">
           <Sidebar />

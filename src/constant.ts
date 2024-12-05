@@ -62,3 +62,67 @@ export const allCategory = [
     value: "racing",
   },
 ];
+
+export const appCategory = [
+  {
+    label: "Art Design",
+    value: "art-design",
+  },
+];
+
+export const gameCategory = [
+  {
+    label: "Battle Royal",
+    value: "battle-royal",
+  },
+  {
+    label: "Racing",
+    value: "racing",
+  },
+];
+
+export const navLinks = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "APPS",
+    link: "/apps",
+  },
+  {
+    label: "GAMES",
+    link: "/games",
+  },
+  {
+    label: "TOP RANK",
+    link: "/top-rank",
+  },
+  {
+    label: "FEATURED",
+    link: "/featured",
+  },
+];
+
+export const footerLinks = [
+  {
+    label: "Home",
+    link: "/",
+  },
+  {
+    label: "Disclaimer",
+    link: "/disclaimer",
+  },
+  {
+    label: "About Us",
+    link: "/about-us",
+  },
+  {
+    label: "Privacy Policy",
+    link: "/privacy-policy",
+  },
+  {
+    label: "Terms of Service",
+    link: "/terms-service",
+  },
+];

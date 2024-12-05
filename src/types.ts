@@ -11,3 +11,9 @@ export type BlogContent = {
   }[];
   version: string;
 };
+
+declare global {
+  interface Window {
+    adsbygoogle: unknown[];
+  }
+}
