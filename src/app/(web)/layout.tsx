@@ -7,6 +7,8 @@ import { WebSidebar } from "@/features/web/web-sidebar";
 import { GlobalLayoutType } from "@/types";
 import { PUB_ID } from "@/config";
 
+export const revalidate = 0;
+
 const WebLayout = ({ children }: GlobalLayoutType) => {
   return (
     <main className="w-full min-h-screen bg-neutral-100">
