@@ -1,27 +1,23 @@
-"use client";
 import Link from "next/link";
-import useMedia from "use-media";
 import { ChevronRight } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { truncateString } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 type ApkCardProp = {
   title: string;
   link?: string;
   children: React.ReactNode;
+  className?: string;
 };
 
-export const ApkCard = ({ title, link, children }: ApkCardProp) => {
-  const isMobile = useMedia({ maxWidth: "768px" });
-
+export const ApkCard = ({ title, link, children, className }: ApkCardProp) => {
   return (
-    <div className="my-6 w-full">
+    <div className={cn(className ? className : "my-6 w-full")}>
       <Card>
         <CardHeader>
-          <CardTitle className="w-full flex items-center justify-between text-lg font-medium">
-            <h2>{truncateString(title, isMobile)}</h2>
+          <CardTitle className="w-full flex items-center justify-between text-lg overflow-hidden font-medium">
+            <h2 className="truncate">{title}</h2>
             {link && (
               <Link
                 href={link}

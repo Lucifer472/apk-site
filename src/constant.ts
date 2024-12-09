@@ -1,27 +1,27 @@
 export const ageGroup = [
   {
     label: "4+ Years",
-    value: "4",
+    value: 4,
   },
   {
     label: "9+ Years",
-    value: "9",
+    value: 9,
   },
   {
     label: "12+ Years",
-    value: "12",
+    value: 12,
   },
   {
     label: "15+ Years",
-    value: "15",
+    value: 15,
   },
   {
     label: "17+ Years",
-    value: "17",
+    value: 17,
   },
   {
     label: "19+ Years",
-    value: "19",
+    value: 19,
   },
 ];
 
@@ -464,7 +464,7 @@ export const navLinks = [
   },
   {
     label: "APPS",
-    link: "/apps",
+    link: "/categories",
   },
   {
     label: "GAMES",
@@ -473,10 +473,6 @@ export const navLinks = [
   {
     label: "TOP RANK",
     link: "/top-rank",
-  },
-  {
-    label: "FEATURED",
-    link: "/featured",
   },
 ];
 

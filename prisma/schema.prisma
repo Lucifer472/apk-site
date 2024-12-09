@@ -25,13 +25,17 @@ model User {
   name String
   icon String  @db.LongText
   category String
-  rating String
-  age String
+  rating Int
+  age Int
   download String
+  clicked  Int    @default(1)
   link String
   developer  String
   version String
   features  String  @db.LongText
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   images Images[]
  }

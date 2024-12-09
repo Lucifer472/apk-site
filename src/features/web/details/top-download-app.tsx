@@ -1,14 +1,14 @@
-import { getTopDownloadApplications } from "@/data/application";
+import { getTopDownloadApplicationsAll } from "@/data/application";
 import { ApkCard } from "../homepage/apk-card";
 import { ApkIconHolderLong } from "../homepage/apk-icon-holder";
 
 export const TopDownloadApps = async () => {
-  const data = await getTopDownloadApplications();
+  const data = await getTopDownloadApplicationsAll();
 
   if (!data) return;
 
   return (
-    <ApkCard title="Top Downloads" link="/">
+    <ApkCard title="Top Downloads" link="/top-rank">
       <div className="flex flex-col gap-y-6 w-full">
         {data.map((d, index) => (
           <div

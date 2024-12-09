@@ -10,7 +10,7 @@ type ApkIconHolderProp = {
 
 type ApkIconHolderLongProp = {
   category: string;
-  star: string;
+  star: number;
 } & ApkIconHolderProp;
 
 export const ApkIconHolder = ({ href, src, name }: ApkIconHolderProp) => {
@@ -19,7 +19,7 @@ export const ApkIconHolder = ({ href, src, name }: ApkIconHolderProp) => {
       href={"/details/" + href}
       className="relative h-[110px] w-[130px] md:h-[120px] md:w-[140px] hover:text-main block"
     >
-      <div className="flex flex-col items-center justify-center gap-y-2 relative z-20 transition-all">
+      <div className="flex flex-col items-center overflow-hidden justify-center gap-y-2 relative z-20 transition-all">
         <Image
           src={src}
           alt={name}
@@ -28,7 +28,9 @@ export const ApkIconHolder = ({ href, src, name }: ApkIconHolderProp) => {
           width={50}
           height={50}
         />
-        <span className="text-sm font-medium">{name}</span>
+        <span className="text-sm text-left max-w-[100px] truncate font-medium">
+          {name}
+        </span>
       </div>
       <Image
         src={"/bg-icon.png"}

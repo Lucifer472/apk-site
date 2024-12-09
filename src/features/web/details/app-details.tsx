@@ -43,11 +43,11 @@ export const AppDetailsCard = ({ data }: { data: Application }) => {
   return (
     <ApkCard title="About this app">
       <div className="space-y-6 w-full">
-        <div className="flex items-center gap-2 sm:gap-6 w-full flex-wrap justify-center sm:justify-between">
+        <div className="flex items-center gap-2 sm:gap-6 w-full flex-wrap justify-between">
           {details.map((d) => (
             <div
               key={d.icon}
-              className="flex items-center justify-start gap-x-1 sm:gap-x-4 rounded-md w-[170px] sm:w-[250px] bg-gradient-to-r from-green-50 to-main-hover pl-2 pr-2 sm:pr-6 py-2 border border-main-light"
+              className="flex items-center justify-start gap-x-1 sm:gap-x-4 rounded-md w-[145px] sm:w-[250px] bg-gradient-to-r from-green-50 to-main-hover pl-2 pr-2 sm:pr-6 py-2 border border-main-light"
             >
               <div className="size-[24px] sm:size-[32px] aspect-square relative">
                 <Image
@@ -57,11 +57,11 @@ export const AppDetailsCard = ({ data }: { data: Application }) => {
                   style={{ objectFit: "contain" }}
                 />
               </div>
-              <div className="flex flex-col justify-between">
-                <span className="text-xs sm:text-sm text-gray-500">
+              <div className="flex flex-col justify-between overflow-hidden">
+                <span className="text-xs sm:text-sm text-gray-500 truncate">
                   {d.label}
                 </span>
-                <span className="font-medium">{d.value}</span>
+                <span className="font-medium truncate">{d.value}</span>
               </div>
             </div>
           ))}

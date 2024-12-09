@@ -97,7 +97,7 @@ export const SignInCard = () => {
       </div>
       <CardFooter className="p-7 flex items-center justify-center">
         <p>
-          Don&apos;t have an Account?{" "}
+          Don&apos;t have an Account?
           <Link href={"/contact"} className="text-blue-700">
             Contact us
           </Link>

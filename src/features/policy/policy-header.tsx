@@ -43,7 +43,7 @@ export const PolicyHeader = () => {
         )}
       >
         <div className="max-w-screen-xl px-4 md:px-2 lg:px-0 mx-auto w-full h-full flex items-center justify-start">
-          <Logo />
+          <Logo className="text-white" />
         </div>
       </nav>
     </header>

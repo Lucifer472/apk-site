@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { db } from "@/lib/db";
 import { addApkFormSchema } from "@/features/dashboard/admin/schema";
+import { appCategory, gameCategory } from "@/constant";
 
 export const createApplication = async (
   v: z.infer<typeof addApkFormSchema>
@@ -72,9 +73,154 @@ export const getRelatedApps = async (category: string) => {
   }
 };
 
-export const getTopDownloadApplications = async () => {
+export const getTopDownloadApplicationsAll = async () => {
   try {
     return await db.application.findMany({
+      take: 6,
+      orderBy: {
+        clicked: "desc",
+      },
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getTopDownloadApplications = async (isGame?: boolean) => {
+  let categoryValues = appCategory.map((category) => category.value);
+
+  if (isGame) {
+    categoryValues = gameCategory.map((category) => category.value);
+  }
+
+  try {
+    return await db.application.findMany({
+      take: 10,
+      where: {
+        category: {
+          in: categoryValues,
+        },
+      },
+      orderBy: {
+        clicked: "desc",
+      },
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getTopDownloadApplicationsMore = async (isGame?: boolean) => {
+  let categoryValues = appCategory.map((category) => category.value);
+
+  if (isGame) {
+    categoryValues = gameCategory.map((category) => category.value);
+  }
+
+  try {
+    return await db.application.findMany({
+      take: 100,
+      where: {
+        category: {
+          in: categoryValues,
+        },
+      },
+      orderBy: {
+        clicked: "desc",
+      },
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getApplicationByCategoryPage = async ({
+  category,
+  page,
+}: {
+  category: string;
+  page: number;
+}) => {
+  try {
+    return await db.application.findMany({
+      take: 10,
+      skip: 9 * (page - 1),
+      where: {
+        category,
+      },
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getApplicationBySearch = async (q: string) => {
+  try {
+    return await db.application.findMany({
+      take: 10,
+      where: {
+        OR: [
+          {
+            name: {
+              contains: q,
+            },
+          },
+          {
+            id: {
+              contains: q,
+            },
+          },
+          {
+            developer: {
+              contains: q,
+            },
+          },
+        ],
+      },
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getSportsApps = async () => {
+  try {
+    return await db.application.findMany({
+      where: {
+        category: "sports",
+      },
+      take: 6,
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getSocialApps = async () => {
+  try {
+    return await db.application.findMany({
+      where: {
+        category: "social",
+      },
+      take: 6,
+    });
+  } catch {
+    return null;
+  }
+};
+
+export const getApplicationByAge = async (age: number) => {
+  const categoryValues = gameCategory.map((category) => category.value);
+  try {
+    return await db.application.findMany({
+      where: {
+        age: {
+          lte: age,
+        },
+        category: {
+          in: categoryValues,
+        },
+      },
       take: 6,
     });
   } catch {

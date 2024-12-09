@@ -10,7 +10,7 @@ export const WebFooter = () => {
     <footer className="w-full mt-8 py-6 bg-gray-900">
       <div className="w-full max-w-screen-xl space-y-4 mx-auto px-6 lg:px-0">
         <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-6 lg:justify-between">
-          <Logo />
+          <Logo className="text-white" />
           <p className="text-white text-center text-sm font-medium">
             {SITE_TITLE} -the fastest growing app store and distribution
             platform in the world. We are a global platform for global talent

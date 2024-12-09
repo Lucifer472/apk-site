@@ -62,7 +62,7 @@ const AboutUs = () => {
         <p>
           We respect the intellectual property and trademarks of all app
           developers and publishers, and we ensure that all apps and games we
-          share are intended for home or personal use only.{" "}
+          share are intended for home or personal use only.
         </p>
 
         <p>
@@ -100,7 +100,7 @@ const AboutUs = () => {
           regarding our website or services, please do not hesitate to contact
           us at [truepubmedia@gmail.com](mailto:truepubmedia@gmail.com). We
           value your feedback and are dedicated to maintaining an open line of
-          communication with our users.{" "}
+          communication with our users.
         </p>
       </div>
     </div>
