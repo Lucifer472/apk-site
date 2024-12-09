@@ -48,14 +48,14 @@ export const AddApkForm = () => {
       name: "",
       version: "",
       package_name: "",
-      age: "4",
+      age: 4,
       category: "battle-royal",
       developer: "",
       download: "",
       icon: "",
       images: [""],
       link: "",
-      ratings: "1",
+      ratings: 1,
       features: "",
     },
   });
@@ -216,7 +216,7 @@ export const AddApkForm = () => {
                 <FormLabel>Age Group:</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={field.value.toString()}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -225,7 +225,7 @@ export const AddApkForm = () => {
                   </FormControl>
                   <SelectContent>
                     {ageGroup.map((age) => (
-                      <SelectItem key={age.value} value={age.value}>
+                      <SelectItem key={age.value} value={age.value.toString()}>
                         {age.label}
                       </SelectItem>
                     ))}
@@ -270,7 +270,7 @@ export const AddApkForm = () => {
                 <FormLabel>App Ratings:</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={field.value.toString()}
                 >
                   <FormControl>
                     <SelectTrigger>
