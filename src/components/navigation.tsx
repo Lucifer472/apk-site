@@ -42,7 +42,7 @@ export const Navigation = () => {
         const Icon = !isActive ? r.icon : r.activeIcon;
 
         return (
-          <Link href={"/"} key={r.href}>
+          <Link href={r.href} key={r.href}>
             <div
               className={cn(
                 "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",

@@ -1,3 +1,5 @@
+import { Application, Images } from "@prisma/client";
+
 export type GlobalLayoutType = {
   children: React.ReactNode;
 };
@@ -17,3 +19,7 @@ declare global {
     adsbygoogle: unknown[];
   }
 }
+
+export type ApplicationWithImages = Application & {
+  images: Images[];
+};

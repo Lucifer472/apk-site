@@ -7,13 +7,11 @@ import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import EditorjsList from "@editorjs/list";
 
-import { BlogContent } from "@/types";
-
 const Editor = ({
   initialData,
   setData,
 }: {
-  initialData?: BlogContent;
+  initialData?: EditorJS.OutputData;
   setData: (v: EditorJS.OutputData) => void;
 }) => {
   const editorRef = useRef<EditorJS | null>(null);

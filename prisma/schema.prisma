@@ -45,5 +45,5 @@ model User {
   url  String
   
   applicationId   String
-  Application   Application @relation(fields: [applicationId], references: [id])
+  Application   Application @relation(fields: [applicationId], references: [id],onDelete: Cascade)
  }

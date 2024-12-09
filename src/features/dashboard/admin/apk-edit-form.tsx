@@ -8,7 +8,6 @@ import { ImageIcon } from "lucide-react";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { toast } from "sonner";
 
 import {
   Form,
@@ -30,33 +29,32 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ImageUpload } from "./image-upload";
 
-import { addApkFormSchema } from "./schema";
-import { useCreateApplication } from "./api/use-create-application";
+import { editApkFormSchema } from "./schema";
 
 import { ageGroup, allCategory, appRatings } from "@/constant";
+import { ApplicationWithImages } from "@/types";
 
 const Editor = dynamic(() => import("./editor"), { ssr: false });
 
-export const AddApkForm = () => {
+export const EditApkForm = ({ data }: { data: ApplicationWithImages }) => {
   const [content, setContent] = useState<EditorJS.OutputData | null>(null);
 
-  const { mutate, isPending } = useCreateApplication();
+  const images = data.images.map((i) => i.url);
 
-  const form = useForm<z.infer<typeof addApkFormSchema>>({
-    resolver: zodResolver(addApkFormSchema),
+  const form = useForm<z.infer<typeof editApkFormSchema>>({
+    resolver: zodResolver(editApkFormSchema),
     defaultValues: {
-      name: "",
-      version: "",
-      package_name: "",
-      age: 4,
-      category: "battle-royal",
-      developer: "",
-      download: "",
-      icon: "",
-      images: [""],
-      link: "",
-      ratings: 1,
-      features: "",
+      name: data.name,
+      version: data.version,
+      age: data.age,
+      category: data.category,
+      developer: data.developer,
+      download: data.download,
+      icon: data.icon,
+      images: images,
+      link: data.link,
+      ratings: data.rating,
+      features: data.features,
     },
   });
 
@@ -104,22 +102,8 @@ export const AddApkForm = () => {
     }
   }, [content, form]);
 
-  const handleApkAction = (values: z.infer<typeof addApkFormSchema>) => {
-    mutate(
-      { json: values },
-      {
-        onError: () => {
-          toast.error("Unable to add application");
-        },
-        onSuccess: () => {
-          toast.success("Application Add Successfully");
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        },
-      }
-    );
+  const handleApkAction = (values: z.infer<typeof editApkFormSchema>) => {
+    console.log(values);
   };
 
   return (
@@ -147,19 +131,6 @@ export const AddApkForm = () => {
                 <FormLabel>App Version:</FormLabel>
                 <FormControl>
                   <Input {...field} type="text" placeholder="1.71.2" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="package_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>App Package (MUST BE UNIQUE):</FormLabel>
-                <FormControl>
-                  <Input {...field} type="text" placeholder="class.of.clans" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -372,9 +343,12 @@ export const AddApkForm = () => {
               </FormItem>
             )}
           />
-          <Editor setData={setContent} />
+          <Editor
+            setData={setContent}
+            initialData={JSON.parse(form.getValues("features"))}
+          />
         </div>
-        <Button disabled={isPending} type="submit" size={"lg"}>
+        <Button disabled={false} type="submit" size={"lg"}>
           Add Application
         </Button>
       </form>

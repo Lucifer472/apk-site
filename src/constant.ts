@@ -27,23 +27,23 @@ export const ageGroup = [
 
 export const appRatings = [
   {
-    value: "1",
+    value: 1,
     label: "1 Start",
   },
   {
-    value: "2",
+    value: 2,
     label: "2 Start",
   },
   {
-    value: "3",
+    value: 3,
     label: "3 Start",
   },
   {
-    value: "4",
+    value: 4,
     label: "4 Start",
   },
   {
-    value: "5",
+    value: 5,
     label: "5 Start",
   },
 ];
