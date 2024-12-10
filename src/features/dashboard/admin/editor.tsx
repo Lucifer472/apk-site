@@ -12,58 +12,71 @@ const Editor = ({
   setData,
 }: {
   initialData?: EditorJS.OutputData;
-  setData: (v: EditorJS.OutputData) => void;
+  setData: (v: string) => void;
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<EditorJS | null>(null);
 
+  const defaultValueRef = useRef(initialData);
+
   useEffect(() => {
-    editorRef.current = new EditorJS({
-      holder: "editorjs",
+    if (!containerRef.current) return;
+
+    const container = containerRef.current;
+
+    const editor = container.appendChild(
+      container.ownerDocument.createElement("div")
+    );
+
+    const edit = new EditorJS({
+      holder: editor,
       tools: {
         header: Header,
         list: {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          class: EditorjsList,
+          class: EditorjsList as unknown as EditorJS.ToolConstructable,
           inlineToolbar: true,
           config: {
             defaultStyle: "unordered",
           },
         },
       },
-      data: initialData,
+      data: defaultValueRef.current,
       placeholder: "Let`s write an awesome Apps Features!",
       onChange: async () => {
         if (editorRef.current) {
-          try {
-            const outputData = await editorRef.current.save();
-            setData(outputData);
-          } catch {
-            toast.error("Failed to save editor data");
-          }
+          editorRef.current
+            .save()
+            .then((res) => {
+              setData(JSON.stringify(res));
+            })
+            .catch((error) => {
+              console.log(error);
+              toast.error("Unable to save Editor");
+            });
         }
       },
     });
 
+    editorRef.current = edit;
+
     return () => {
-      if (editorRef.current) {
+      if (container) {
+        container.innerHTML = "";
+      }
+
+      if (editorRef) {
         editorRef.current = null;
       }
     };
-  }, [setData, initialData]);
+  }, [setData]);
 
   return (
     <div className="space-y-2 px-2">
       <span className="font-medium">App Features</span>
-      <div className="border border-neutral-300 shadow-sm focus:outline rounded-md w-full flex items-center justify-center py-6">
-        <div
-          id="editorjs"
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          ref={editorRef}
-          className="prose w-full"
-        ></div>
-      </div>
+      <div
+        ref={containerRef}
+        className="border border-neutral-300 shadow-sm focus:outline rounded-md w-full flex items-center justify-center py-6"
+      ></div>
     </div>
   );
 };

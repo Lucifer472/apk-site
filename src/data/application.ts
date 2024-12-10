@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 import { db } from "@/lib/db";
-import { addApkFormSchema } from "@/features/dashboard/admin/schema";
+import {
+  addApkFormSchema,
+  editApkFormSchema,
+} from "@/features/dashboard/admin/schema";
 import { appCategory, gameCategory } from "@/constant";
 
 export const createApplication = async (
@@ -31,6 +34,58 @@ export const createApplication = async (
         if (!!v.images[i]) {
           imagesData.push({
             applicationId: data.id,
+            url: v.images[i],
+          });
+        }
+      }
+
+      if (imagesData.length > 0) {
+        await db.images.createMany({
+          data: imagesData,
+        });
+      }
+    }
+
+    return data;
+  } catch {
+    return null;
+  }
+};
+
+export const updateApplication = async (
+  v: z.infer<typeof editApkFormSchema>,
+  id: string
+) => {
+  try {
+    const data = await db.application.update({
+      where: { id },
+      data: {
+        age: v.age,
+        category: v.category,
+        developer: v.developer,
+        download: v.download,
+        features: v.features,
+        icon: v.icon,
+        link: v.link,
+        name: v.name,
+        rating: v.ratings,
+        version: v.version,
+      },
+    });
+
+    await db.images.deleteMany({
+      where: {
+        applicationId: id,
+      },
+    });
+
+    if (v.images) {
+      const imagesData = [];
+
+      for (let i = 0; i < v.images.length; i++) {
+        if (!!v.images[i]) {
+          imagesData.push({
+            applicationId: id,
             url: v.images[i],
           });
         }

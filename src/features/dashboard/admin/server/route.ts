@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 
-import { addApkFormSchema } from "../schema";
+import { addApkFormSchema, editApkFormSchema } from "../schema";
 import { db } from "@/lib/db";
 
 import { SessionMiddleware } from "@/lib/middleware";
-import { createApplication } from "@/data/application";
+import { createApplication, updateApplication } from "@/data/application";
 
 const app = new Hono()
   .post(
@@ -18,6 +18,19 @@ const app = new Hono()
       if (!data) return c.json({ error: "Unable to create Application" }, 500);
 
       return c.json({ success: "App Created Successfully" }, 200);
+    }
+  )
+  .patch(
+    "/edit/:id",
+    zValidator("json", editApkFormSchema),
+    SessionMiddleware,
+    async (c) => {
+      const v = c.req.valid("json");
+      const { id } = c.req.param();
+      const data = await updateApplication(v, id);
+      if (!data) return c.json({ error: "Unable to Update Application" }, 500);
+
+      return c.json({ success: "App Update Successfully", data }, 200);
     }
   )
   .get("/:search", SessionMiddleware, async (c) => {

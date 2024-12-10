@@ -33,11 +33,14 @@ import { editApkFormSchema } from "./schema";
 
 import { ageGroup, allCategory, appRatings } from "@/constant";
 import { ApplicationWithImages } from "@/types";
+import { useUpdateApplication } from "./api/use-update-application";
 
 const Editor = dynamic(() => import("./editor"), { ssr: false });
 
 export const EditApkForm = ({ data }: { data: ApplicationWithImages }) => {
-  const [content, setContent] = useState<EditorJS.OutputData | null>(null);
+  const [content, setContent] = useState("");
+
+  const { mutate, isPending } = useUpdateApplication();
 
   const images = data.images.map((i) => i.url);
 
@@ -95,15 +98,16 @@ export const EditApkForm = ({ data }: { data: ApplicationWithImages }) => {
   };
 
   useEffect(() => {
-    if (content) {
-      const data = JSON.stringify(content);
-
-      form.setValue("features", data);
+    if (!!content) {
+      form.setValue("features", content);
     }
-  }, [content, form]);
+  }, [form, content]);
 
   const handleApkAction = (values: z.infer<typeof editApkFormSchema>) => {
-    console.log(values);
+    mutate({
+      json: values,
+      param: { id: data.id },
+    });
   };
 
   return (
@@ -330,7 +334,7 @@ export const EditApkForm = ({ data }: { data: ApplicationWithImages }) => {
               <FormItem>
                 <FormLabel>Upload Images</FormLabel>
                 <div className="flex items-center justify-start w-full flex-wrap gap-4">
-                  {field.value.map((_v, index) => (
+                  {[...field.value, ""].map((_v, index) => (
                     <ImageUpload
                       value={field.value}
                       onChange={field.onChange}
@@ -348,8 +352,8 @@ export const EditApkForm = ({ data }: { data: ApplicationWithImages }) => {
             initialData={JSON.parse(form.getValues("features"))}
           />
         </div>
-        <Button disabled={false} type="submit" size={"lg"}>
-          Add Application
+        <Button disabled={isPending} type="submit" size={"lg"}>
+          Save
         </Button>
       </form>
     </Form>

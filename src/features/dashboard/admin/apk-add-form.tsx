@@ -38,7 +38,7 @@ import { ageGroup, allCategory, appRatings } from "@/constant";
 const Editor = dynamic(() => import("./editor"), { ssr: false });
 
 export const AddApkForm = () => {
-  const [content, setContent] = useState<EditorJS.OutputData | null>(null);
+  const [content, setContent] = useState("");
 
   const { mutate, isPending } = useCreateApplication();
 
@@ -53,7 +53,7 @@ export const AddApkForm = () => {
       developer: "",
       download: "",
       icon: "",
-      images: [""],
+      images: [],
       link: "",
       ratings: 1,
       features: "",
@@ -97,12 +97,10 @@ export const AddApkForm = () => {
   };
 
   useEffect(() => {
-    if (content) {
-      const data = JSON.stringify(content);
-
-      form.setValue("features", data);
+    if (!!content) {
+      form.setValue("features", content);
     }
-  }, [content, form]);
+  }, [form, content]);
 
   const handleApkAction = (values: z.infer<typeof addApkFormSchema>) => {
     mutate(
@@ -359,7 +357,7 @@ export const AddApkForm = () => {
               <FormItem>
                 <FormLabel>Upload Images</FormLabel>
                 <div className="flex items-center justify-start w-full flex-wrap gap-4">
-                  {field.value.map((_v, index) => (
+                  {[...field.value, ""].map((_v, index) => (
                     <ImageUpload
                       value={field.value}
                       onChange={field.onChange}
