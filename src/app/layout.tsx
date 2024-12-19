@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { SITE_TITLE } from "@/config";
 
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: SITE_TITLE + " - Best and Free Android APK Download Service",
@@ -27,6 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("antialiased", roboto.className)}>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7775590737760034"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        ></Script>
         <QueryProvider>
           <NuqsAdapter>{children}</NuqsAdapter>
         </QueryProvider>

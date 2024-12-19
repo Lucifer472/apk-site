@@ -75,7 +75,7 @@ const Editor = ({
       <span className="font-medium">App Features</span>
       <div
         ref={containerRef}
-        className="border border-neutral-300 shadow-sm focus:outline rounded-md w-full flex items-center justify-center py-6"
+        className="border prose border-neutral-300 shadow-sm focus:outline rounded-md w-full flex items-center justify-center py-6"
       ></div>
     </div>
   );
