@@ -4,7 +4,13 @@ import { allCategory } from "@/constant";
 import Image from "next/image";
 import { DetailsFormatter } from "./details-fromatter";
 
-export const AppDetailsCard = ({ data }: { data: Application }) => {
+export const AppDetailsCard = ({
+  data,
+  isDetailed,
+}: {
+  data: Application;
+  isDetailed?: boolean;
+}) => {
   const category = allCategory.find((c) => c.value === data.category);
 
   const details = [
@@ -43,11 +49,11 @@ export const AppDetailsCard = ({ data }: { data: Application }) => {
   return (
     <ApkCard title="About this app">
       <div className="space-y-6 w-full">
-        <div className="flex items-center gap-2 sm:gap-6 w-full flex-wrap justify-between">
+        <div className="w-full grid grid-cols-2 lg:grid-cols-3 gap-6">
           {details.map((d) => (
             <div
               key={d.icon}
-              className="flex items-center justify-start gap-x-1 sm:gap-x-4 rounded-md w-[145px] sm:w-[250px] bg-gradient-to-r from-green-50 to-main-hover pl-2 pr-2 sm:pr-6 py-2 border border-main-light"
+              className="flex col-span-1 items-center justify-start gap-x-1 sm:gap-x-4 rounded-md w-[145px] sm:w-[250px] bg-gradient-to-r from-green-50 to-main-hover pl-2 pr-2 sm:pr-6 py-2 border border-main-light"
             >
               <div className="size-[24px] sm:size-[32px] aspect-square relative">
                 <Image
@@ -66,7 +72,7 @@ export const AppDetailsCard = ({ data }: { data: Application }) => {
             </div>
           ))}
         </div>
-        <DetailsFormatter content={JSON.parse(data.features)} />
+        {isDetailed && <DetailsFormatter content={JSON.parse(data.features)} />}
       </div>
     </ApkCard>
   );

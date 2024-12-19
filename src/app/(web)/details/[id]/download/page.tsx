@@ -10,6 +10,7 @@ import { BottomAd, MiddleAd, TopAdLarge } from "@/features/ads/ads";
 import { AppDetailsCard } from "@/features/web/details/app-details";
 import { TopFreeApk } from "@/features/web/details/top-free-apk";
 import { PageSidebar } from "@/features/web/page-sidebar";
+import { ClickedApp } from "@/features/web/details/click-dowload";
 
 const AppDetailsPage = async ({
   params,
@@ -30,20 +31,22 @@ const AppDetailsPage = async ({
       <>
         <AppDownloadLabel
           icon={data.icon}
-          link={`/details/${data.id}/download`}
+          link={data.link}
           name={data.name}
           category={data.category}
           age={data.age}
           download={data.download}
           rating={data.rating}
           id={data.id}
-          isDownload
         />
         <TopAdLarge />
         <AppScreenshots images={data.images} />
         <RelatedApps category={data.category} />
         <MiddleAd />
-        <AppDetailsCard data={data} isDetailed />
+        <AppDetailsCard data={data} />
+        <div className="w-full flex items-center justify-center">
+          <ClickedApp id={data.id} link={data.link} target />
+        </div>
         <BottomAd />
         <TopFreeApk />
       </>

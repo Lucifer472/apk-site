@@ -14,6 +14,7 @@ type AppDownloadLabelProps = {
   download: string;
   age: number;
   id: string;
+  isDownload?: boolean;
 };
 
 export const AppDownloadLabel = ({
@@ -25,6 +26,7 @@ export const AppDownloadLabel = ({
   download,
   age,
   id,
+  isDownload,
 }: AppDownloadLabelProps) => {
   const find = allCategory.find((item) => item.value === category);
 
@@ -87,7 +89,7 @@ export const AppDownloadLabel = ({
         </p>
       </div>
       <TopAdSmall />
-      <ClickedApp link={link} id={id} />
+      {isDownload && <ClickedApp link={link} id={id} />}
     </div>
   );
 };
